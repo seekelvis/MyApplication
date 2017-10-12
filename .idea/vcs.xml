@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="D:\Android\MyApplication\AndroidStudioProjects\MyApplication\AndroidLab" vcs="Git" />
-    <mapping directory="D:\Android\MyApplication\AndroidStudioProjects\MyApplication\AndroidLab1" vcs="Git" />
-    <mapping directory="D:\Android\MyApplication\AndroidStudioProjects\MyApplication\MyApplication" vcs="Git" />
   </component>
 </project>
