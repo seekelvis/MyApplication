@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -26,7 +27,6 @@ public class MainActivity extends Activity {
     Button regist;
     Button button_now;
     RadioGroup radiogroup;
-    TextInputEditText inputStudent, inputPassword;
     EditText editStudent, editPassword;
     String str1, str2;
 
@@ -36,6 +36,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final TextInputLayout  inputStudent = (TextInputLayout) findViewById(R.id.inputStudent);
+        final TextInputLayout  inputPassword = (TextInputLayout) findViewById(R.id.inputPassword);
         initial();
         mImage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -110,49 +112,47 @@ public class MainActivity extends Activity {
                 else
                     Toast.makeText(MainActivity.this,"教职工注册功能尚未启用",Toast.LENGTH_SHORT)
                          .show();
-//                    Snackbar.make(view,"教师注册功能尚未启", Snackbar.LENGTH_SHORT)
-//                            .setAction("确定", new View.OnClickListener(){
-//                                @Override
-//                                public void onClick(View view){}
-//                            })
-//                            .show();
+                    Snackbar.make(view,"教师注册功能尚未启", Snackbar.LENGTH_SHORT)
+                            .setAction("确定", new View.OnClickListener(){
+                                @Override
+                                public void onClick(View view){}
+                            })
+                            .show();
             }
         });
 
-//        login.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                str1 = editStudent.getText().toString();
-//                str2 = editPassword.getText().toString();
-////                if (str1.equals("")){
-////                    inputStudent.setError("学号不能为空");
-////                }
-////                else if (str2.equals("")){
-////                    inputPassword.setError("密码不能为空");
-////                }
-////                else if (str1.equals("123456") && str2.equals("6666")){
-////                    Snackbar.make(view, "登陆成功", Snackbar.LENGTH_SHORT)
-////                            .setAction("确定", new View.OnClickListener(){
-////                                @Override
-////                                public void onClick(View view){}
-////                            })
-////                            .show();
-////                    inputStudent.setError(null);
-////                    inputPassword.setError(null);
-////                }
-////                else {
-////                    Snackbar.make(view, "学号或密码错误", Snackbar.LENGTH_SHORT)
-////                            .setAction("确定", new View.OnClickListener(){
-////                                @Override
-////                                public void onClick(View view) {
-////                                }
-////                            })
-////                            .show();
-////                    inputStudent.setError(null);
-////                    inputPassword.setError(null);
-////                }
-//            }
-//        });
+        login.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                str1 = editStudent.getText().toString();
+                str2 = editPassword.getText().toString();
+                if (str1.equals(""))
+                    inputStudent.setError("学号不能为空");
+                else
+                    inputStudent.setError(null);
+                if (str2.equals(""))
+                    inputPassword.setError("密码不能为空");
+                else
+                    inputPassword.setError(null);
+                if (!str1.equals("") && !str2.equals(""))
+                    if (str1.equals("123456") && str2.equals("6666"))
+                        Snackbar.make(view, "登陆成功", Snackbar.LENGTH_SHORT)
+                                .setAction("确定", new View.OnClickListener(){
+                                    @Override
+                                    public void onClick(View view){}
+                                })
+                                .show();
+                    else
+                        Snackbar.make(view, "学号或密码错误", Snackbar.LENGTH_SHORT)
+                                .setAction("确定", new View.OnClickListener(){
+                                    @Override
+                                    public void onClick(View view) {
+                                    }
+                                })
+                                .show();
+
+            }
+        });
 
 
     }
@@ -170,11 +170,8 @@ public class MainActivity extends Activity {
         login = (Button) findViewById(R.id.login);
         regist = (Button) findViewById(R.id.regist);
         radiogroup = (RadioGroup) findViewById(R.id.group);
-        inputStudent = (TextInputEditText) findViewById(R.id.inputStudent);
-        inputPassword = (TextInputEditText) findViewById(R.id.inputPassword);
         editStudent = (EditText) findViewById(R.id.editStudent);
         editPassword = (EditText) findViewById(R.id.editPassword);
-
         builder = new AlertDialog.Builder(MainActivity.this);
 
     }
