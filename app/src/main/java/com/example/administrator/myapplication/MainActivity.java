@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,9 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
+    //与XML中id对应的变量声明
     ImageView mImage;
-    AlertDialog.Builder builder;//简单对话框
     RadioButton btn_student;
     RadioButton btn_teacher;
     Button login;
@@ -28,7 +25,11 @@ public class MainActivity extends Activity {
     Button button_now;
     RadioGroup radiogroup;
     EditText editStudent, editPassword;
+    TextInputLayout inputStudent;
+    TextInputLayout inputPassword;
+    //.java代码中使用到的变量
     String str1, str2;
+    AlertDialog.Builder builder;//简单对话框
 
 
     @Override
@@ -36,8 +37,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextInputLayout  inputStudent = (TextInputLayout) findViewById(R.id.inputStudent);
-        final TextInputLayout  inputPassword = (TextInputLayout) findViewById(R.id.inputPassword);
+
         initial();
         mImage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -56,8 +56,8 @@ public class MainActivity extends Activity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i ){
                             Toast.makeText(MainActivity.this, "您选择了[取消]",Toast.LENGTH_SHORT).show();
-                        };
-                        });
+                        }
+                });
 
                 builder.create();
                 builder.show();
@@ -99,6 +99,8 @@ public class MainActivity extends Activity {
             }
         });
 
+
+
         regist.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -109,15 +111,9 @@ public class MainActivity extends Activity {
                                 public void onClick(View view){}
                             })
                             .show();
-                else
+                else if (button_now == btn_teacher)
                     Toast.makeText(MainActivity.this,"教职工注册功能尚未启用",Toast.LENGTH_SHORT)
                          .show();
-                    Snackbar.make(view,"教师注册功能尚未启", Snackbar.LENGTH_SHORT)
-                            .setAction("确定", new View.OnClickListener(){
-                                @Override
-                                public void onClick(View view){}
-                            })
-                            .show();
             }
         });
 
@@ -127,14 +123,20 @@ public class MainActivity extends Activity {
                 str1 = editStudent.getText().toString();
                 str2 = editPassword.getText().toString();
                 if (str1.equals(""))
+                {
                     inputStudent.setError("学号不能为空");
-                else
-                    inputStudent.setError(null);
-                if (str2.equals(""))
-                    inputPassword.setError("密码不能为空");
-                else
                     inputPassword.setError(null);
-                if (!str1.equals("") && !str2.equals(""))
+                }
+                else
+                if (str2.equals(""))
+                {
+                    inputStudent.setError(null);
+                    inputPassword.setError("密码不能为空");
+                }
+                else
+                {
+                    inputStudent.setError(null);
+                    inputPassword.setError(null);
                     if (str1.equals("123456") && str2.equals("6666"))
                         Snackbar.make(view, "登陆成功", Snackbar.LENGTH_SHORT)
                                 .setAction("确定", new View.OnClickListener(){
@@ -150,7 +152,27 @@ public class MainActivity extends Activity {
                                     }
                                 })
                                 .show();
+                }
+            }
+        });
 
+        editStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editStudent.setFocusable(true);//设置输入框可聚集
+                editStudent.setFocusableInTouchMode(true);//设置触摸聚焦
+                editStudent.requestFocus();//请求焦点
+                editStudent.findFocus();//获取焦点
+            }
+        });
+
+        editPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editPassword.setFocusable(true);//设置输入框可聚集
+                editPassword.setFocusableInTouchMode(true);//设置触摸聚焦
+                editPassword.requestFocus();//请求焦点
+                editPassword.findFocus();//获取焦点
             }
         });
 
@@ -159,7 +181,6 @@ public class MainActivity extends Activity {
 
     private void selectRadioBtn(){
         button_now = (RadioButton) findViewById(radiogroup.getCheckedRadioButtonId());
-//                    selectText = button_now.getT
     }
 
     void initial()
@@ -170,9 +191,11 @@ public class MainActivity extends Activity {
         login = (Button) findViewById(R.id.login);
         regist = (Button) findViewById(R.id.regist);
         radiogroup = (RadioGroup) findViewById(R.id.group);
+        inputStudent = (TextInputLayout) findViewById(R.id.inputStudent);
+        inputPassword = (TextInputLayout) findViewById(R.id.inputPassword);
         editStudent = (EditText) findViewById(R.id.editStudent);
         editPassword = (EditText) findViewById(R.id.editPassword);
-        builder = new AlertDialog.Builder(MainActivity.this);
-
+        builder = new AlertDialog.Builder(MainActivity.this);//简单对话框实例
+        button_now = (RadioButton) findViewById(R.id.chooseStudent);//用于获取当前被选择的单选项
     }
 }
